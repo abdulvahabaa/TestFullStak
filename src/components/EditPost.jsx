@@ -62,10 +62,10 @@ function EditPost({
       formData.append('description', desc);
       formData.append('postId', postId);
   
-      if (image) {
+      // if (image) {
         formData.append('picture', image);
         formData.append('picturePath', image.name);
-      }
+      // }
   
       const response = await axios.put('/posts/edit', formData, {
         headers: { Authorization: `Bearer ${token}` },

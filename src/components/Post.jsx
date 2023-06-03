@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 
-
+import IMAGE_URL from "../utils/IMAGE_URL";
 import DeletePost from "./DeletePost";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -98,7 +98,7 @@ const Post = ({
         <CardMedia
           component="img"
           height="20%"
-          image={`http://localhost:3001/assets/${picturePath}`}
+          image={picturePath}
           alt="No image"
         />
       )}

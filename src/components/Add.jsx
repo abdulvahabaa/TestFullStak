@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost, setPosts } from "../state/userState";
 import BASE_URL from "../utils/BASE_URL";
+import axios from "axios";
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -45,6 +46,7 @@ const Add = () => {
 
   const fullName = `${firstName} ${lastName}`;
 
+
   const handlePost = async () => {
     const formData = new FormData();
     formData.append("userId", _id);
@@ -53,17 +55,21 @@ const Add = () => {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-
-    const response = await fetch(`${BASE_URL}/posts/create`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
-    setImage(null);
-    setPost("");
-    setOpen(false);
+  
+    try {
+      const response = await axios.post(`${BASE_URL}/posts/create`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      const posts = response.data;
+      dispatch(setPosts({ posts }));
+      setImage(null);
+      setPost("");
+      setOpen(false);
+    } catch (error) {
+      // Handle error
+      console.log(error);
+    }
   };
 
   return (
